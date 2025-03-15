@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multitasking App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1e1e2f;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #2a2a3a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #00aaff;
+            font-weight: 600;
+        }
+        .clock {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00aaff, #00ffcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        button {
+            background: #00aaff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #0088cc;
+            transform: scale(1.05);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #3a3a4f;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔹 Multitasking App 🔹</h1>
+        
+        <!-- Digital Clock -->
+        <div class="clock" id="clock"></div>
+        
+        <!-- Alarm System -->
+        <h2>⏰ Set Alarm</h2>
+        <input type="time" id="alarmTime">
+        <button onclick="setAlarm()">Set Alarm</button>
+        <audio id="alarmSound" src="https://www.zedge.net/ringtones/4c2420d2-ed6e-486e-83e2-b591174e698a"></audio>
+        
+        <!-- Task & Timer System -->
+        <h2>📝 Task & Timer</h2>
+        <input type="text" id="taskInput" placeholder="Enter task">
+        <input type="number" id="taskTimer" placeholder="Minutes">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function setAlarm() {
+            let alarmTime = document.getElementById("alarmTime").value;
+            let alarmSound = document.getElementById("alarmSound");
+            let checkAlarm = setInterval(() => {
+                let now = new Date();
+                let currentTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+                if (currentTime === alarmTime) {
+                    alarmSound.play();
+                    alert("⏰ Alarm Ringing!");
+                    clearInterval(checkAlarm);
+                }
+            }, 1000);
+        }
+
+        function addTask() {
+            let taskName = document.getElementById("taskInput").value;
+            let taskMinutes = document.getElementById("taskTimer").value;
+            if (!taskName || !taskMinutes) return alert("⚠️ Please enter task and time!");
+            let taskList = document.getElementById("taskList");
+            let listItem = document.createElement("li");
+            listItem.innerText = `✅ ${taskName} - ${taskMinutes} min`;
+            taskList.appendChild(listItem);
+            let taskSound = new Audio("https://www.zedge.net/ringtones/4c2420d2-ed6e-486e-83e2-b591174e698a");
+            setTimeout(() => {
+                taskSound.play();
+                alert(`🎉 Task Completed: ${taskName}`);
+            }, taskMinutes * 60000);
+        }
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
